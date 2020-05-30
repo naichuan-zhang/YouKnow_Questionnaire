@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.questionnaire.mapper.login.SysLoginMapper">
+    <resultMap id="CountMap" type="java.util.Map">
+        <result column="count" property="count" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectByUsernameCount" resultMap="CountMap" parameterType="java.util.Map">
+        select COUNT(login_id) as count
+        from sys_login
+        where username = #{username, jdbcType=VARCHAR}
+    </select>
+</mapper>

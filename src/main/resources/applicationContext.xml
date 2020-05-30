@@ -20,6 +20,7 @@
     <bean class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:SqlMapConfig.xml" />
+        <property name="mapperLocations" value="classpath:com/questionnaire/mapper/*.xml" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

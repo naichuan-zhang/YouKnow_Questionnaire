@@ -18,19 +18,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">首页</a>
+                            <a class="nav-link" href="<%=basePath%>/home">首页</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">权限设置</a>
+                            <a class="nav-link" href="<%=basePath%>/login/user">权限设置</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">维护问卷</a>
+                            <a class="nav-link" href="<%=basePath%>/question">维护问卷</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">角色设置</a>
+                            <a class="nav-link" href="<%=basePath%>/role/mainView">角色设置</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">我的问卷</a>
+                            <a class="nav-link" href="<%=basePath%>/question/me">我的问卷</a>
+                        </li>
+                        <li>
+                            <a href="<%=basePath %>/per/mainView">权限设置</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

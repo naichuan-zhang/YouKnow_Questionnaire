@@ -2,6 +2,7 @@ package com.questionnaire.controller;
 
 import com.questionnaire.entity.questionnaire.QuestionnaireMain;
 import com.questionnaire.service.questionnaire.QuestionnaireService;
+import com.questionnaire.standard.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,14 @@ public class HomeController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
+    @Autowired
+    private Util util;
+
     @RequestMapping(value = "/home")
     public ModelAndView home(@RequestParam(name = "page", defaultValue = "0") Integer page,
                              @RequestParam(name = "row", defaultValue = "10") Integer row) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("home");
         Map<String, Object> params = new HashMap<>();
         if (page > 0)
             params.put("page", (page - 1) * row);
@@ -37,20 +41,23 @@ public class HomeController {
         params.put("mainEndtime", new Date());
         params.put("mainIsuse", "y");
         List<QuestionnaireMain> questionnaireMainList = questionnaireService.findMainPage(params);
-        Integer count = questionnaireService.findCount(params);
-        Integer countPage;
-        if (count % row == 0) {
-            countPage = count / row;
+        // total number of records
+        Long totalRecordNumber = questionnaireService.findCount(params);
+        // total number of pages
+        Long totalPageNumber = 0L;
+        if (totalRecordNumber % row == 0)
+            totalPageNumber = totalRecordNumber / row;
+        else
+            totalPageNumber = totalRecordNumber / row + 1;
+        // 当不是显示第一页时
+        String pageHtml;
+        if (page > 0) {
+            pageHtml = util.getPageHtml(page, Integer.valueOf(totalPageNumber + ""));
         } else {
-            countPage = count / row + 1;
+            pageHtml = util.getPageHtml(page + 1, Integer.valueOf(totalPageNumber + ""));
         }
-//        String currentPage;
-//        if (page >0){
-//            currentPage = ut.page(page, Integer.valueOf(countPage+""));
-//        }else{
-//            currentPage = ut.page(page+1, Integer.valueOf(countPage+""));
-//        }
         modelAndView.addObject("mainList", questionnaireMainList);
+        modelAndView.addObject("pageHtml", pageHtml);
         return modelAndView;
     }
 }

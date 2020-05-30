@@ -23,7 +23,8 @@ public class QuestionnaireService {
         return questionnaireMainMapper.selectPage(params);
     }
 
-    public Integer findCount(Map<String, Object> params) {
-        return questionnaireMainMapper.selectCount(params).get("count");
+    public Long findCount(Map<String, Object> params) {
+        Map<String, Long> map = questionnaireMainMapper.selectCount(params);
+        return map.get("count");
     }
 }

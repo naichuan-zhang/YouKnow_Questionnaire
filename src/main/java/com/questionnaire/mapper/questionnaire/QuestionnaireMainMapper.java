@@ -8,5 +8,5 @@ import java.util.Map;
 public interface QuestionnaireMainMapper {
 
     List<QuestionnaireMain> selectPage(Map<String, Object> param);
-    Map<String, Integer> selectCount(Map<String,Object> param);
+    Map<String, Long> selectCount(Map<String,Object> param);
 }
