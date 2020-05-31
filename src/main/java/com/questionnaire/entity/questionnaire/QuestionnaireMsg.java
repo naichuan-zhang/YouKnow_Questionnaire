@@ -17,6 +17,6 @@ public class QuestionnaireMsg {
     private String msgId;
     private String msgText;
     private String mainId;
-    private String msg_creatuser;
+    private String msgCreatuser;
     private Date msgCreattime;
 }

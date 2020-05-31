@@ -12,5 +12,9 @@
         <typeAlias type="com.questionnaire.entity.role.SysPermissionTree" alias="SysPermissionTree" />
         <typeAlias type="com.questionnaire.entity.login.SysUserInfo" alias="SysUserInfo" />
         <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireMain" alias="QuestionnaireMain" />
+        <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireAnswer" alias="QuestionnaireAnswer" />
+        <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireMainUser" alias="QuestionnaireMainUser" />
+        <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireMsg" alias="QuestionnaireMsg" />
+        <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireQuestion" alias="QuestionnaireQuestion" />
     </typeAliases>
 </configuration>
