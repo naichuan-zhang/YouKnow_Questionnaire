@@ -3,5 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+    <typeAliases>
+        <typeAlias type="com.questionnaire.entity.login.SysLogin" alias="SysLogin" />
+        <typeAlias type="com.questionnaire.entity.role.SysRole" alias="SysRole" />
+        <typeAlias type="com.questionnaire.entity.role.SysPermission" alias="SysPermission" />
+        <typeAlias type="com.questionnaire.entity.role.SysRoleTree" alias="SysRoleTree" />
+        <typeAlias type="com.questionnaire.entity.role.SysRolePermission" alias="SysRolePermission" />
+        <typeAlias type="com.questionnaire.entity.role.SysPermissionTree" alias="SysPermissionTree" />
+        <typeAlias type="com.questionnaire.entity.login.SysUserInfo" alias="SysUserInfo" />
+        <typeAlias type="com.questionnaire.entity.questionnaire.QuestionnaireMain" alias="QuestionnaireMain" />
+    </typeAliases>
 </configuration>

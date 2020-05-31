@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.Md5CredentialsMatcher" />
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+
+    <bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher" />
+        <property name="permissionsLookupEnabled" value="true" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="authenticationQuery"
+                  value="select password from sys_login where username=?" />
+        <property name="userRolesQuery"
+                  value="select role_name from sys_login_role slr left join sys_role using(role_id) left join sys_login using(login_id) where slf.username = ?" />
+        <property name="permissionsQuery"
+                  value="SELECT permission_name FROM sys_role_permission srp left join sys_role using(role_id) left join sys_permission using(permission_id) WHERE srp.role_name = ?" />
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="jdbcRealm" />
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login.jsp" />
+        <property name="successUrl" value="/home" />
+        <property name="unauthorizedUrl" value="/" />
+        <property name="filterChainDefinitions">
+            <value>
+<!--                /index=authc-->
+<!--                /question=roles["admin"]-->
+<!--                /question/**=roles["admin"]-->
+            </value>
+        </property>
+    </bean>
+</beans>

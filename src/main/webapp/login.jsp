@@ -134,6 +134,9 @@
                         </div>
                     </div>
                 </form>
+                <div class="msg" style="color: red">
+                    <p>${message}</p>
+                </div>
             </div>
         </div>
     </div>

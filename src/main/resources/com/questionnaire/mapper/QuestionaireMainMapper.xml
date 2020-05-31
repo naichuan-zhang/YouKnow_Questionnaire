@@ -21,6 +21,104 @@
         main_id, main_title, main_creat, main_isuse, main_endtime, main_creatuser, main_creatdep
     </sql>
 
+    <insert id="insert" parameterType="QuestionnaireMain">
+        insert into questionnaire_main (main_id, main_title, main_creat,
+                                        main_isuse,main_endtime,main_creatuser)
+        values (#{mainId,jdbcType=VARCHAR}, #{mainTitle,jdbcType=VARCHAR}, #{mainCreat,jdbcType=TIMESTAMP},
+                #{mainIsuse,jdbcType=CHAR}, #{mainEndtime,jdbcType=DATE}, #{mainCreatuser, jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="QuestionnaireMain">
+        insert into questionnaire_main
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="mainId != null" >
+                main_id,
+            </if>
+            <if test="mainTitle != null" >
+                main_title,
+            </if>
+            <if test="mainCreat != null" >
+                main_creat,
+            </if>
+            <if test="mainIsuse != null" >
+                main_isuse,
+            </if>
+            <if test="mainEndtime != null" >
+                main_endtime,
+            </if>
+            <if test="mainCreatuser != null" >
+                main_creatuser,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="mainId != null" >
+                #{mainId,jdbcType=VARCHAR},
+            </if>
+            <if test="mainTitle != null" >
+                #{mainTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="mainCreat != null" >
+                #{mainCreat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mainIsuse != null" >
+                #{mainIsuse,jdbcType=CHAR},
+            </if>
+            <if test="mainEndtime != null" >
+                #{mainEndtime,jdbcType=DATE},
+            </if>
+            <if test="mainCreatuser != null" >
+                #{mainCreatuser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="QuestionnaireMain">
+        update questionnaire_main
+        <set >
+            <if test="mainTitle != null" >
+                main_title = #{mainTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="mainCreat != null" >
+                main_creat = #{mainCreat,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mainIsuse != null" >
+                main_isuse = #{mainIsuse,jdbcType=CHAR},
+            </if>
+            <if test="mainEndtime != null" >
+                main_endtime = #{mainEndtime,jdbcType=CHAR},
+            </if>
+        </set>
+        where main_id = #{mainId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="QuestionnaireMain">
+        update questionnaire_main
+        set main_title = #{mainTitle,jdbcType=VARCHAR},
+            main_creat = #{mainCreat,jdbcType=TIMESTAMP},
+            main_isuse = #{mainIsuse,jdbcType=CHAR}
+        where main_id = #{mainId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateMainIsuseN">
+        update questionnaire_main
+        set
+            main_isuse = 'n'
+    </update>
+    <update id="updateMainCreat" parameterType="string">
+        update questionnaire_main
+        set
+            main_creatdep = main_creatdep+1
+        where
+            main_id = #{mainId,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        delete from questionnaire_main
+        where main_id = #{mainId, jdbcType=VARCHAR}
+    </delete>
+    <delete id="delCheck">
+        delete from questionnaire_main
+        where main_id in
+        <foreach collection="array" index="index" item="mainIds" open="(" separator="," close=")">
+            #{mainIds}
+        </foreach>
+    </delete>
+
     <select id="selectPage" resultMap="baseResultMap" parameterType="java.util.Map">
         select <include refid="base_column_list" />
         from questionnaire_main
@@ -33,5 +131,16 @@
         select COUNT(main_id)
         from questionnaire_main
         where main_isuse = 'y' and #{mainEndtime} &lt;=main_endtime
+    </select>
+    <select id="selectByMainIsuse" resultMap="baseResultMap">
+        select <include refid="base_column_list" />
+        from questionnaire_main
+        where main_isuse = 'y'
+    </select>
+    <select id="selectByPrimaryKey" resultMap="baseResultMap" parameterType="string">
+        select <include refid="base_column_list" />
+        from questionnaire_main
+        where main_id = #{mainId, jdbcType=VARCHAR}
+        order by main_creat
     </select>
 </mapper>
